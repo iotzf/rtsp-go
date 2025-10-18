@@ -459,6 +459,74 @@ gst-launch-1.0 rtspsrc protocols=tcp location=rtsp://localhost:8554/test ! decod
    }
    ```
 
+## RTSP代理服务器
+
+本项目还包含一个完整的RTSP代理服务器实现，位于 `proxy/` 目录下。
+
+### 代理功能特性
+
+- ✅ **RTSP消息代理**: 完整的RTSP协议消息转发
+- ✅ **媒体流代理**: 支持RTP/RTCP和TCP Interleaved媒体流代理
+- ✅ **负载均衡**: 支持多个上游服务器和路由配置
+- ✅ **会话管理**: 完整的代理会话生命周期管理
+- ✅ **统计监控**: 详细的代理性能和统计信息
+- ✅ **配置管理**: 灵活的配置文件和命令行参数
+- ✅ **高并发**: 支持大量并发连接和会话
+
+### 代理架构
+
+```
+客户端 <---> RTSP代理 <---> 上游服务器
+   |              |              |
+   |              |              |
+   v              v              v
+RTSP控制      RTSP消息转发    RTSP控制
+RTP/RTCP     媒体流代理      RTP/RTCP
+```
+
+### 快速使用代理
+
+```bash
+# 编译代理程序
+cd proxy
+go build -o rtsp-proxy main.go proxy.go rtsp_io.go media_proxy.go config.go
+
+# 启动代理服务器
+./rtsp-proxy -listen 0.0.0.0:8555 -upstream rtsp://localhost:8554/test
+
+# 客户端连接代理
+vlc rtsp://proxy-server:8555/stream
+```
+
+### 代理配置示例
+
+```json
+{
+  "listen_address": "0.0.0.0",
+  "listen_port": 8555,
+  "upstream_servers": {
+    "/test": "rtsp://localhost:8554/test",
+    "/camera1": "rtsp://localhost:8554/camera1",
+    "/camera2": "rtsp://localhost:8554/camera2"
+  },
+  "default_server": "rtsp://localhost:8554/default",
+  "timeout_seconds": 30,
+  "max_connections": 1000,
+  "enable_logging": true
+}
+```
+
+### 代理应用场景
+
+- **负载均衡**: 将客户端请求分发到多个上游服务器
+- **协议转换**: 在不同RTSP实现之间进行协议转换
+- **访问控制**: 实现RTSP流的访问控制和认证
+- **网络优化**: 优化网络传输和减少延迟
+- **监控代理**: 监控和分析RTSP流量
+- **防火墙穿透**: 帮助RTSP流穿越防火墙和NAT
+
+详细文档请参考 [proxy/README.md](proxy/README.md)。
+
 ## 许可证
 
 MIT License

@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	rtspProtocon "rtsp-go/rtspProtocon"
+	rtspProtocon "github.com/iotzf/rtsp-go/rtspProtocon"
 )
 
 // 示例：创建自定义RTSP消息

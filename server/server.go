@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	rtspProtocon "rtsp-go/rtspProtocon"
+	rtspProtocon "github.com/iotzf/rtsp-go/rtspProtocon"
 )
 
 // RTSP服务器

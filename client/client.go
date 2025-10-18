@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	rtspProtocon "rtsp-go/rtspProtocon"
+	rtspProtocon "github.com/iotzf/rtsp-go/rtspProtocon"
 )
 
 // RTSP客户端
